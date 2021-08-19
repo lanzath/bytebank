@@ -1,4 +1,6 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { Transferencia } from './models/transferencia.model';
+import { TransferenciaService } from './services/transferencia.service';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +9,10 @@ import { Component, EventEmitter } from '@angular/core';
 })
 export class AppComponent {
   title = 'bytebank';
-  transferencias: Array<any> = [];
 
-  transferir($event): void {
-    // desestruturação do objeto com spread operator (...)
-    const transferencia = { ...$event, data: new Date() };
-    this.transferencias.push(transferencia);
+  constructor(private transferenciaService: TransferenciaService) {}
+
+  transferir($event: Transferencia): void {
+    this.transferenciaService.adicionar($event);
   }
 }

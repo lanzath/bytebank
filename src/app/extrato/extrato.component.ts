@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Transferencia } from '../models/transferencia.model';
+import { TransferenciaService } from '../services/transferencia.service';
 
 @Component({
   selector: 'app-extrato',
@@ -6,10 +9,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./extrato.component.scss'],
 })
 export class ExtratoComponent implements OnInit {
-  // Dados recebidos via prop.
-  @Input() transferencias!: Array<any>;
+  transferencias$!: Observable<Array<Transferencia>>;
 
-  constructor() {}
+  constructor(private transferenciaService: TransferenciaService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.transferencias$ = this.transferenciaService.todas();
+  }
 }
